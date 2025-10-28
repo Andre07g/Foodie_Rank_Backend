@@ -1,0 +1,5 @@
+ARCHIVO_PROVICIONAL=Este archivo es provicional
+MONGO_URI=mongodb://localhost:27017/
+DB_NAME=testpage
+PORT=4000
+HOST_NAME=localhost
