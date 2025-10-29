@@ -1,4 +1,4 @@
-import { obtenerSolicitudes, obtenerSolicitudPorID, crearSolicitud, actualizarSolicitud, eliminarSolicitud } from "../services/solicitudes_services";
+import { obtenerSolicitudes, obtenerSolicitudPorID, crearSolicitud, actualizarSolicitud, eliminarSolicitud } from "../services/solicitudes_services.js";
 
 export async function obtenerTodasLasSolicitudes(req, res) {
     try {

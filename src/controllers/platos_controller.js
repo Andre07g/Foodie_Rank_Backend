@@ -1,4 +1,4 @@
-import { obtenerPlatos, obtenerPlatoPorID, crearPlato, actualizarPlato, eliminarPlato} from "../services/platos_services";
+import { obtenerPlatos, obtenerPlatoPorID, crearPlato, actualizarPlato, eliminarPlato} from "../services/platos_services.js";
 
 export async function obtenerTodosLosPlatos(req, res) {
     try {

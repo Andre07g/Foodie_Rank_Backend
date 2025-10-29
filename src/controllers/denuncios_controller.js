@@ -1,4 +1,4 @@
-import { obtenerDenuncios, obtenerDenuncioPorID, crearDenuncio, actualizarDenuncio, eliminarDenuncio } from "../services/denuncios_services";
+import { obtenerDenuncios, obtenerDenuncioPorID, crearDenuncio, actualizarDenuncio, eliminarDenuncio } from "../services/denuncios_services.js";
 
 export async function obtenerTodosLosDenuncios(req, res) {
     try {

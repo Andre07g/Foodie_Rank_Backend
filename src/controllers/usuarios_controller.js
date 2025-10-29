@@ -1,4 +1,4 @@
-import { obtenerUsuarioPorID, obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario } from "../services/usuarios_services";
+import { obtenerUsuarioPorID, obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario } from "../services/usuarios_services.js";
 
 export async function obtenerTodosLosUsuarios(req, res) {
     try {

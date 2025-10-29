@@ -1,4 +1,4 @@
-import { obtenerRestaurantes, obtenerRestaurantePorID, crearRestaurante, actualizarRestaurante, eliminarRestaurante } from "../services/restaurantes_services";
+import { obtenerRestaurantes, obtenerRestaurantePorID, crearRestaurante, actualizarRestaurante, eliminarRestaurante } from "../services/restaurantes_services.js";
 
 export async function obtenerTodosLosRestaurantes(req, res) {
     try {

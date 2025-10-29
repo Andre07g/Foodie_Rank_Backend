@@ -1,4 +1,4 @@
-import { obtenerReseñas, obtenerReseñaPorID, crearReseña, actualizarReseña, eliminarReseña } from "../services/reseñas_service";
+import { obtenerReseñas, obtenerReseñaPorID, crearReseña, actualizarReseña, eliminarReseña } from "../services/reseñas_service.js";
 
 export async function obtenerTodasLasReseñas(req, res) {
     try {

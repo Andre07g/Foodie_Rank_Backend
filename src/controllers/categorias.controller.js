@@ -1,4 +1,4 @@
-import { obtenerCategorias, actualizarCategoria, eliminarCategoria, crearCategoria } from "../services/categorias_services";
+import { obtenerCategorias, actualizarCategoria, eliminarCategoria, crearCategoria } from "../services/categorias_services.js";
 
 export async function obtenerTodasLasCategorias(req, res) {
     try {
