@@ -13,16 +13,13 @@ export const createUsuarioDTO = [
 
     body("contraseña")
         .isString()
-        .isLength({ min: 60 })
-        .withMessage("La contraseña debe ser el hash con mínimo 60 caracteres"),
+        .isLength({ min: 8 })
+        .withMessage("La contraseña debe tener al menos 8 caracteres"),
 
     body("rol")
         .isIn(["Admin", "User"])
-        .withMessage("El rol debe ser 'Admin' o 'User'"),
+        .withMessage("El rol debe ser 'Admin' o 'User'")
 
-    body("estado")
-        .isIn(["Activo", "Bloqueado"])
-        .withMessage("El estado debe ser 'Activo' o 'Bloqueado'"),
 ];
 
 export const updateUsuarioDTO = [
