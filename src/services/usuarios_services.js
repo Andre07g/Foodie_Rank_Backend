@@ -1,8 +1,13 @@
 import { obtenerBD } from "../config/db.js";
 import { ObjectId } from "mongodb";
+import bcrypt from "bcrypt";
+const saltRounds = parseInt(process.env.SALT_ROUNDS);
+const hashPassword = async (password) => {
+    const hashed = await bcrypt.hash(password, saltRounds);
+    return hashed;
+}
+
 const COLECCION_USUARIOS = "usuarios"
-
-
 
 export async function obtenerUsuarios(){
     const db = await obtenerBD()
@@ -17,10 +22,12 @@ export async function obtenerUsuarioPorID(id){
 }
 
 export async function crearUsuario(data){
-    const {nombre, correo, contraseña, rol, estado} = data;
-
-    const usuario = {nombre, correo, contraseña, rol, estado}
-    const db = await obtenerBD()
+    const {nombre, correo, contraseña, rol} = data;
+    const contraseñaHasheada = await hashPassword(contraseña);
+    console.log(contraseñaHasheada);
+    console.log(contraseñaHasheada.length)
+    const usuario = {nombre, correo, contraseña:contraseñaHasheada, rol, estado:"Activo"}
+    const db = await obtenerBD();
     await db.collection(COLECCION_USUARIOS).insertOne(usuario);
     return {message:"El usuario fue creado correctamente"};
 }
