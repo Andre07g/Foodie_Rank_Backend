@@ -1,5 +1,5 @@
 import { obtenerBD } from "../config/db.js";
-import { ObjectId } from "mongodb";
+import { ObjectId, Double } from "mongodb";
 const COLECCION_RESEÑAS = "reseñas"
 
 
@@ -17,9 +17,11 @@ export async function obtenerReseñaPorID(id){
 }
 
 export async function crearReseña(data){
-    const {usuario, restaurante, calificacion, comentario, likes, dislikes} = data;
-
-    const Reseña = {usuario, restaurante, calificacion, comentario, likes, dislikes}
+    const {usuario, restaurante, calificacion, comentario} = data;
+    const usuarioID = new ObjectId(usuario);
+    const restauranteID = new ObjectId(restaurante);
+    const calificacionNum = new Double(calificacion)
+    const Reseña = {usuario: usuarioID, restaurante:restauranteID, calificacion:calificacionNum, comentario, likes:[], dislikes:[]}
     const db = await obtenerBD()
     await db.collection(COLECCION_RESEÑAS).insertOne(Reseña);
     return {message:"La Reseña fue creada correctamente"};

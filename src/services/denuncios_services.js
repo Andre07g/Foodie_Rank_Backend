@@ -18,8 +18,8 @@ export async function obtenerDenuncioPorID(id){
 
 export async function crearDenuncio(data){
     const {reseña} = data;
-
-    const Denuncio = {reseña}
+    const reseñaID = new ObjectId(reseña)
+    const Denuncio = {reseña:reseñaID}
     const db = await obtenerBD()
     await db.collection(COLECCION_DENUNCIOS).insertOne(Denuncio);
     return {message:"El Denuncio fue creado correctamente"};

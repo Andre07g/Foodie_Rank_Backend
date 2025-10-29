@@ -16,9 +16,11 @@ export async function obtenerSolicitudPorID(id){
 }
 
 export async function crearSolicitud(data){
-    const {nombre, ubicacion, imagen, popularidad, categoria} = data;
-
-    const Solicitud = {nombre, ubicacion, imagen, popularidad, categoria}
+   
+const {nombre, ubicacion, imagen,categoria} = data;
+    const categoriaID = new ObjectId(categoria)
+    
+    const Solicitud = {nombre, ubicacion, imagen, popularidad:null, categoria:categoriaID}
     const db = await obtenerBD()
     await db.collection(COLECCION_SOLICITUDES).insertOne(Solicitud);
     return {message:"El Solicitud fue creada correctamente"};

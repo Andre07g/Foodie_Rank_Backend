@@ -1,5 +1,5 @@
 import { obtenerBD } from "../config/db.js";
-import { ObjectId } from "mongodb";
+import { ObjectId, Double } from "mongodb";
 const COLECCION_PLATOS = "platos"
 
 
@@ -11,15 +11,16 @@ export async function obtenerPlatos(){
 }
 
 export async function obtenerPlatoPorID(id){
-    const db = await getDB()
+    const db = await obtenerBD()
     const result = await db.collection(COLECCION_PLATOS).findOne({_id:new ObjectId(id)});
     return result;
 }
 
 export async function crearPlato(data){
     const {nombre, precio, descripcion, imagen, restaurante} = data;
-
-    const Plato = {nombre, precio, descripcion, imagen, restaurante}
+    const restauranteID = new ObjectId(restaurante);
+    const precioNum = new Double(precio)
+    const Plato = {nombre, precio:precioNum, descripcion, imagen, restaurante:restauranteID}
     const db = await obtenerBD()
     await db.collection(COLECCION_PLATOS).insertOne(Plato);
     return {message:"El Plato fue creado correctamente"};
