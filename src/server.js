@@ -22,7 +22,7 @@ app.use(express.json());
 app.use("/categorias",categoriasRouter);
 app.use("/denuncios",denunciosRouter);
 app.use("/platos",platosRouter);
-app.use("/reseñas",reseñasRouter);
+app.use("/resenias",reseñasRouter);
 app.use("/restaurantes",restaurantesRouter);
 app.use("/solicitudes",solicitudesRouter);
 app.use("/usuarios",usuariosRouter);
