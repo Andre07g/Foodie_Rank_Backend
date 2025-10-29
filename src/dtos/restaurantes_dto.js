@@ -19,9 +19,9 @@ export const createRestauranteDTO = [
         .isURL().withMessage("La imagen debe ser una URL válida")
         .notEmpty().withMessage("La imagen es obligatoria"),
 
-    body("popularidad")
-        .isFloat({ min: 1, max: 5 }).withMessage("Popularidad debe ser un número entre 1 y 5")
-        .notEmpty().withMessage("La popularidad es obligatoria"),
+body("popularidad")
+    .optional({ nullable: true })
+    .isFloat({ min: 1, max: 5 }).withMessage("Popularidad debe ser un número entre 1 y 5"),
 
     body("categoria")
         .notEmpty().withMessage("La categoría es obligatoria")
