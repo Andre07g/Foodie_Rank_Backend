@@ -51,7 +51,7 @@ db.createCollection("restaurantes", {
         $jsonSchema: {
             bsonType: "object",
             // Todos los campos principales requeridos.
-            required: ["nombre", "ubicacion", "imagen", "popularidad"],
+            required: ["nombre", "ubicacion", "imagen", "popularidad","categoria"],
 
             properties: {
                 nombre: {
@@ -74,6 +74,10 @@ db.createCollection("restaurantes", {
                     description: "La popularidad debe ser un numero decimal",
                     min: 1,
                     max: 5
+                },
+                categoria: {
+                    bsonType: "ObjectId",
+                    descripcion: "Id de la categoria"
                 }
             }
         }
@@ -117,7 +121,7 @@ db.createCollection("platos", {
                 },
                 restaurante: {
                     bsonType: "ObjectId",
-                    descripcion: "Id del restaurante al que pertenece"
+                    description: "Id del restaurante al que pertenece"
                 }
             }
         }
@@ -163,14 +167,14 @@ db.createCollection("reseñas", {
                     descripcion:"Usuarios que dan like a la reseña",
                     items: {
                         bsonType: "ObjectId",
-                        descripcion:"Id del usuario que likea la reseña"
+                        description:"Id del usuario que likea la reseña"
                 }},
                 dislikes:{
                     bsonType:"array",
                     descripcion:"Usuarios que dan dislike a la reseña",
                     items: {
                         bsonType: "ObjectId",
-                        descripcion:"Id del usuario que dislikea la reseña"
+                        description:"Id del usuario que dislikea la reseña"
                 }
             }}
         }
@@ -240,8 +244,36 @@ db.createCollection("denuncios", {
             properties: {
                 reseña: {
                     bsonType: "ObjectId",
-                    descripcion: "Id de la reseña"
+                    description: "Id de la reseña"
                 }}
+        }
+    },
+    // La acción "error" asegura que la operación (inserción/actualización) falle si la validación falla.
+    validationAction: "error",
+    // Nivel "strict" asegura que la validación se aplique a todas las inserciones y actualizaciones.
+    validationLevel: "strict"
+});
+
+db.createCollection("categoria", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            // Todos los campos principales requeridos.
+            required: ["nombre","descripcion"],
+
+            properties: {
+                nombre: {
+                    bsonType: "string",
+                    description: "Nombre de la categoria",
+                    minLength:1
+                },
+                descripcion:{
+                    bsonType:"string",
+                    description:"Descripcion de la categoria",
+                    minLength:1
+                }
+            
+            }
         }
     },
     // La acción "error" asegura que la operación (inserción/actualización) falle si la validación falla.
