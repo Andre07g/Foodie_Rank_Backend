@@ -46,3 +46,19 @@ export async function eliminarUsuario(id){
     return {message:"Usuario eliminado correctamente"}
 
 }
+
+export async function validarEmail(emailUser){
+    const db= await obtenerBD();
+    const result = await db.collection(COLECCION_USUARIOS).findOne({email:emailUser})
+    if(result.matchedCount===0){
+        return false;
+    }
+    else{ return true;}
+}
+
+export async function login(emailUser,contraseniaUser){
+    const db=await obtenerBD();
+    const result = await db.collection(COLECCION_USUARIOS).findOne({email:emailUser});
+    const resultado = await bcrypt.compare(contraseniaUser,result.contraseña);
+    return resultado;
+}
