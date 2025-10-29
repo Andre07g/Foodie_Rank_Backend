@@ -1,4 +1,4 @@
-import { obtenerUsuarioPorID, obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario } from "../services/usuarios_services.js";
+import { obtenerUsuarioPorID, obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario, validarEmail, login } from "../services/usuarios_services.js";
 
 export async function obtenerTodosLosUsuarios(req, res) {
     try {
@@ -46,5 +46,25 @@ export async function eliminarUnUsuario(req, res) {
         res.status(200).json(result);
     } catch (error) {
         res.status(404).json({error: error.message});
+    }
+}
+
+export async function validarExistenciaDeEmail(req, res){
+    try {
+        const result = await validarEmail(req.body);
+        res.status(201).json(result);
+        // aplicar logica para el registro 
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+export async function login(req, res){
+    try {
+        const result = await login(req.body);
+        res.status(201).json(result);
+        // nuevamente aplicar mas logica pq no e tudiao jwt
+    } catch (error) {
+        res.status(400).json({error:error.message})
     }
 }
