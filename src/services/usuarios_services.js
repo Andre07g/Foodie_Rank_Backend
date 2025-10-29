@@ -47,7 +47,8 @@ export async function eliminarUsuario(id){
 
 }
 
-export async function validarEmail(emailUser){
+export async function validarEmail(data){
+    const {emailUser} = data;
     const db= await obtenerBD();
     const result = await db.collection(COLECCION_USUARIOS).findOne({email:emailUser})
     if(result.matchedCount===0){
@@ -56,9 +57,12 @@ export async function validarEmail(emailUser){
     else{ return true;}
 }
 
-export async function login(emailUser,contraseniaUser){
+export async function login(data){
     const db=await obtenerBD();
+    const { emailUser, contraseniaUser } = data;
     const result = await db.collection(COLECCION_USUARIOS).findOne({email:emailUser});
     const resultado = await bcrypt.compare(contraseniaUser,result.contraseña);
     return resultado;
 }
+
+
