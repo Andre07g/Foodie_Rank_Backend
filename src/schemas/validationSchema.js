@@ -70,14 +70,14 @@ db.createCollection("restaurantes", {
                     minLength: 1
                 },
                 popularidad: {
-                    bsonType: "double",
+                    bsonType: ["double", "null"],
                     description: "La popularidad debe ser un numero decimal",
-                    min: 1,
-                    max: 5
+                    minimum: 1,
+                    maximum: 5
                 },
                 categoria: {
-                    bsonType: "ObjectId",
-                    descripcion: "Id de la categoria"
+                    bsonType: "objectId",
+                    description: "Id de la categoria"
                 }
             }
         }
@@ -107,7 +107,7 @@ db.createCollection("platos", {
                 precio: {
                     bsonType: "double",
                     description: "El precio debe ser al menos de 1",
-                    min: 1
+                    minimum: 1
                 },
                 imagen: {
                     bsonType: "string",
@@ -120,7 +120,7 @@ db.createCollection("platos", {
                     minLength: 5
                 },
                 restaurante: {
-                    bsonType: "ObjectId",
+                    bsonType: "objectId",
                     description: "Id del restaurante al que pertenece"
                 }
             }
@@ -144,14 +144,14 @@ db.createCollection("reseñas", {
 
             properties: {
                 usuario: {
-                    bsonType: "ObjectId",
-                    descripcion: "Id del usuario que la realizó"
+                    bsonType: "objectId",
+                    description: "Id del usuario que la realizó"
                 },
                 calificacion: {
                     bsonType: "double",
                     description: "Calificacion del 1 al 5",
-                    min: 1,
-                    max:5
+                    minimum: 1,
+                    maximum:5
                 },
                 comentario: {
                     bsonType: "string",
@@ -159,21 +159,21 @@ db.createCollection("reseñas", {
                     minLength: 1
                 },
                 restaurante: {
-                    bsonType: "ObjectId",
-                    descripcion: "Id del restaurante al que pertenece"
+                    bsonType: "objectId",
+                    description: "Id del restaurante al que pertenece"
                 },
                 likes:{
                     bsonType:"array",
-                    descripcion:"Usuarios que dan like a la reseña",
+                    description:"Usuarios que dan like a la reseña",
                     items: {
-                        bsonType: "ObjectId",
+                        bsonType: "objectId",
                         description:"Id del usuario que likea la reseña"
                 }},
                 dislikes:{
                     bsonType:"array",
-                    descripcion:"Usuarios que dan dislike a la reseña",
+                    description:"Usuarios que dan dislike a la reseña",
                     items: {
-                        bsonType: "ObjectId",
+                        bsonType: "objectId",
                         description:"Id del usuario que dislikea la reseña"
                 }
             }}
@@ -186,10 +186,6 @@ db.createCollection("reseñas", {
 });
 
 
-// Categorias
-
-F
-
 // Solicitudes
 
 
@@ -198,7 +194,7 @@ db.createCollection("solicitudes", {
         $jsonSchema: {
             bsonType: "object",
             // Todos los campos principales requeridos.
-            required: ["nombre", "ubicacion", "imagen", "popularidad"],
+            required: ["nombre", "ubicacion", "imagen", "popularidad","categoria"],
 
             properties: {
                 nombre: {
@@ -217,10 +213,14 @@ db.createCollection("solicitudes", {
                     minLength: 1
                 },
                 popularidad: {
-                    bsonType: "double",
+                    bsonType: ["double", "null"],
                     description: "La popularidad debe ser un numero decimal",
-                    min: 1,
-                    max: 5
+                    minimum: 1,
+                    maximum: 5
+                },
+                categoria: {
+                    bsonType: "objectId",
+                    description: "Id de la categoria"
                 }
             }
         }
@@ -243,7 +243,7 @@ db.createCollection("denuncios", {
 
             properties: {
                 reseña: {
-                    bsonType: "ObjectId",
+                    bsonType: "objectId",
                     description: "Id de la reseña"
                 }}
         }
