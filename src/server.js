@@ -12,6 +12,8 @@ import solicitudesRouter from "./routers/solicitudes_router.js";
 import usuariosRouter from "./routers/usuarios_router.js";  
 import cors from 'cors'
 import rateLimit from "express-rate-limit";
+import { swaggerUi, swaggerSpec } from "./swagger.js";
+
 
 //Config
 const limiter = rateLimit({
@@ -46,3 +48,5 @@ conectartBD().then(()=>{
         console.log(`Backend listening on http://${process.env.HOST_NAME}:${process.env.PORT}`)
     })
 })
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
