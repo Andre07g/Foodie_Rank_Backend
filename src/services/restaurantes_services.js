@@ -17,9 +17,9 @@ export async function obtenerRestaurantePorID(id){
 }
 
 export async function crearRestaurante(data){
-    const {nombre, ubicacion, imagen,categoria} = data;
+    const {nombre, ubicacion, imagen,categoria, usuario} = data;
     const categoriaID = new ObjectId(categoria)
-    const Restaurante = {nombre, ubicacion, imagen, popularidad:null, categoria:categoriaID}
+    const Restaurante = {nombre, ubicacion, imagen, popularidad:null, categoria:categoriaID, usuario}
     const db = await obtenerBD()
     await db.collection(COLECCION_RESTAURANTES).insertOne(Restaurante);
     return {message:"El Restaurante fue creado correctamente"};
