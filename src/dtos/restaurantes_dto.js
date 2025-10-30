@@ -19,13 +19,16 @@ export const createRestauranteDTO = [
         .isURL().withMessage("La imagen debe ser una URL válida")
         .notEmpty().withMessage("La imagen es obligatoria"),
 
-body("popularidad")
-    .optional({ nullable: true })
-    .isFloat({ min: 1, max: 5 }).withMessage("Popularidad debe ser un número entre 1 y 5"),
+    body("popularidad")
+        .optional({ nullable: true })
+        .isFloat({ min: 1, max: 5 }).withMessage("Popularidad debe ser un número entre 1 y 5"),
 
     body("categoria")
         .notEmpty().withMessage("La categoría es obligatoria")
         .matches(objectIdRegex).withMessage("ID de categoría inválido"),
+    body("usuario")
+        .isMongoId()
+        .withMessage("Debe ser un ID de usuario válido"),
 ];
 
 export const updateRestauranteDTO = [

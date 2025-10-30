@@ -18,6 +18,9 @@ export const createSolicitudDTO = [
 
     body("popularidad")
         .isFloat({ min: 1, max: 5 }),
+    body("usuario")
+        .isMongoId()
+        .withMessage("Debe ser un ID de usuario válido")
 ];
 
 export const updateSolicitudDTO = createSolicitudDTO.map(val =>
