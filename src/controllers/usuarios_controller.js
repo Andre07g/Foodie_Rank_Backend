@@ -73,16 +73,30 @@ export async function login(req, res){
 export async function iniciarSesion(req, res){
     try {
         const {emailUser, contraseniaUser} = req.body;
-        const usuario = await validarEmail(emailUser);
+        console.log(emailUser)
+        const usuario = await validarEmail(req.body);
         if(!usuario){
             return res.status(400).json({exito:false, mensaje:"Correo no encontrado"})
         }
-        const // intentar terminar esta vaina porque no entiendo jwt nojoa:c
-
-
+        const coincide = await loginPass(req.body);
+        if(!coincide){
+            return res.status(400).json({exito:false,mensaje:"Contraseña incorrecta"})
+        };
+        const token = jwt.sign(
+            {
+                id:usuario._id,
+                nombre:usuario.nombre,
+                rol:usuario.rol
+            },
+            process.env.JWT_SECRET,
+            {expiresIn:"2h"}
+        );
+        const {contraseña, ...usuarioSinContra} = usuario;
+        res.json({exito:true,usuario:usuarioSinContra,token});
 
     } catch (error) {
-        
+        console.error(error);
+        res.status(500).json({exito:false,mensaje:"Error interno del servidor"})
     }
 
 
