@@ -16,7 +16,7 @@ export async function obtenerUsuarios(){
 }
 
 export async function obtenerUsuarioPorID(id){
-    const db = await getDB()
+    const db = await obtenerDB()
     const result = await db.collection(COLECCION_USUARIOS).findOne({_id:new ObjectId(id)});
     return result;
 }
@@ -50,17 +50,18 @@ export async function eliminarUsuario(id){
 export async function validarEmail(data){
     const {emailUser} = data;
     const db= await obtenerBD();
-    const result = await db.collection(COLECCION_USUARIOS).findOne({email:emailUser})
-    if(result.matchedCount===0){
-        return false;
+    const result = await db.collection(COLECCION_USUARIOS).findOne({correo:emailUser})
+    if(!result){
+        throw new Error("Usuario no encontrado");
+        
     }
-    else{ return true;}
+    return result
 }
 
-export async function login(data){
+export async function loginPass(data){
     const db=await obtenerBD();
     const { emailUser, contraseniaUser } = data;
-    const result = await db.collection(COLECCION_USUARIOS).findOne({email:emailUser});
+    const result = await db.collection(COLECCION_USUARIOS).findOne({correo:emailUser});
     const resultado = await bcrypt.compare(contraseniaUser,result.contraseña);
     return resultado;
 }

@@ -1,4 +1,5 @@
-import { obtenerUsuarioPorID, obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario, validarEmail, login } from "../services/usuarios_services.js";
+import { obtenerUsuarioPorID, obtenerUsuarios, crearUsuario, actualizarUsuario, eliminarUsuario, validarEmail, loginPass } from "../services/usuarios_services.js";
+import jwt from "jsonwebtoken";
 
 export async function obtenerTodosLosUsuarios(req, res) {
     try {
@@ -61,10 +62,30 @@ export async function validarExistenciaDeEmail(req, res){
 
 export async function login(req, res){
     try {
-        const result = await login(req.body);
+        const result = await loginPass(req.body);
         res.status(201).json(result);
         // nuevamente aplicar mas logica pq no e tudiao jwt
     } catch (error) {
         res.status(400).json({error:error.message})
     }
+}
+
+export async function iniciarSesion(req, res){
+    try {
+        const {emailUser, contraseniaUser} = req.body;
+        const usuario = await validarEmail(emailUser);
+        if(!usuario){
+            return res.status(400).json({exito:false, mensaje:"Correo no encontrado"})
+        }
+        const // intentar terminar esta vaina porque no entiendo jwt nojoa:c
+
+
+
+    } catch (error) {
+        
+    }
+
+
+
+
 }
