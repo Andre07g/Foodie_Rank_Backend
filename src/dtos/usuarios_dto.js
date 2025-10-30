@@ -14,12 +14,7 @@ export const createUsuarioDTO = [
     body("contraseña")
         .isString()
         .isLength({ min: 8 })
-        .withMessage("La contraseña debe tener al menos 8 caracteres"),
-
-    body("rol")
-        .isIn(["Admin", "User"])
-        .withMessage("El rol debe ser 'Admin' o 'User'")
-
+        .withMessage("La contraseña debe tener al menos 8 caracteres")
 ];
 
 export const updateUsuarioDTO = [
