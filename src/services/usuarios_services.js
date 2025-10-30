@@ -1,6 +1,7 @@
 import { obtenerBD } from "../config/db.js";
 import { ObjectId } from "mongodb";
 import bcrypt from "bcrypt";
+import { Result } from "express-validator";
 const saltRounds = parseInt(process.env.SALT_ROUNDS);
 const hashPassword = async (password) => {
     const hashed = await bcrypt.hash(password, saltRounds);
@@ -22,11 +23,11 @@ export async function obtenerUsuarioPorID(id){
 }
 
 export async function crearUsuario(data){
-    const {nombre, correo, contraseña, rol} = data;
+    const {nombre, correo, contraseña} = data;
     const contraseñaHasheada = await hashPassword(contraseña);
     console.log(contraseñaHasheada);
     console.log(contraseñaHasheada.length)
-    const usuario = {nombre, correo, contraseña:contraseñaHasheada, rol, estado:"Activo"}
+    const usuario = {nombre, correo, contraseña:contraseñaHasheada, rol:"User", estado:"Activo"}
     const db = await obtenerBD();
     await db.collection(COLECCION_USUARIOS).insertOne(usuario);
     return {message:"El usuario fue creado correctamente"};
@@ -49,8 +50,10 @@ export async function eliminarUsuario(id){
 
 export async function validarEmail(data){
     const {emailUser} = data;
+    console.log(emailUser)
     const db= await obtenerBD();
     const result = await db.collection(COLECCION_USUARIOS).findOne({correo:emailUser})
+    console.log(result)
     if(!result){
         throw new Error("Usuario no encontrado");
         
