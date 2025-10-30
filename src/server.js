@@ -11,12 +11,22 @@ import restaurantesRouter from "./routers/restaurantes_router.js";
 import solicitudesRouter from "./routers/solicitudes_router.js"; 
 import usuariosRouter from "./routers/usuarios_router.js";  
 import cors from 'cors'
+import rateLimit from "express-rate-limit";
 
 //Config
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, 
+    max: 100,
+    message: {
+      error: "Demasiadas solicitudes, intenta más tarde."
+    },
+    standardHeaders: true
+  });
+
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+app.use(limiter);
 // Uso de rutas
 
 app.use("/categorias",categoriasRouter);
