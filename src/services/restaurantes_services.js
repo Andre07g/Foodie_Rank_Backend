@@ -1,14 +1,45 @@
 import { obtenerBD } from "../config/db.js";
 import { ObjectId, Double } from "mongodb";
 const COLECCION_RESTAURANTES = "restaurantes"
-
+const COLECCION_CATEGORIAS = "categorias"
 
 
 export async function obtenerRestaurantes(){
-    const db = await obtenerBD()
-    return await db.collection(COLECCION_RESTAURANTES).find().toArray();
+    const db = await obtenerBD();
+  
+    const restaurantes = await db
+    .collection(COLECCION_RESTAURANTES)
+    .aggregate([
+      {
+        $lookup: {
+          from: COLECCION_CATEGORIAS,
+          let: { categoriaId: "$categoria" }, // variable local
+          pipeline: [
+            { $match: { $expr: { $eq: ["$_id", "$$categoriaId"] } } },
+            { $project: { nombre: 1, descripcion: 1 } }
+          ],
+          as: "categoria_info"
+        }
+      },
+      { $unwind: { path: "$categoria_info", preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          _id: 1,
+          nombre: 1,
+          ubicacion: 1,
+          imagen: 1,
+          popularidad: 1,
+          descripcion: 1,
+          "categoria_info.nombre": 1,
+          "categoria_info.descripcion": 1
+        }
+      }
+    ])
+    .toArray();
 
-}
+  return restaurantes;
+  }
+
 
 export async function obtenerRestaurantePorID(id){
     const db = await getDB()

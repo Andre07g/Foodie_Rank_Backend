@@ -5,6 +5,7 @@ export async function obtenerTodosLosRestaurantes(req, res) {
         const games = await obtenerRestaurantes();
         res.status(200).json(games);
     } catch (error) {
+        console.log(error.message)
         res.status(500).json({error: "Error al obtener todos los restaurantes"});
     }
 }
