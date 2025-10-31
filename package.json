@@ -1,6 +1,6 @@
 {
   "name": "foodie_rank_backend",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Backend para la pagina de Foodie Rank",
   "main": "index.js",
   "scripts": {

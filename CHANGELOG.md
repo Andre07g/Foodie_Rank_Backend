@@ -4,4 +4,6 @@
 ### Primera version
 - Primera version estable y funcional
 
-
+## [2.0.0] - 2025-10-31
+### Cambio de estructura
+- Se corrigieron y cambiaros campos en las estructuras de restaurante y solicitud

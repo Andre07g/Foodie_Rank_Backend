@@ -51,7 +51,7 @@ db.createCollection("restaurantes", {
         $jsonSchema: {
             bsonType: "object",
             // Todos los campos principales requeridos.
-            required: ["nombre", "ubicacion", "imagen", "popularidad","categoria"],
+            required: ["nombre", "ubicacion", "imagen", "popularidad","categoria","usuario"],
 
             properties: {
                 nombre: {
@@ -78,6 +78,10 @@ db.createCollection("restaurantes", {
                 categoria: {
                     bsonType: "objectId",
                     description: "Id de la categoria"
+                },
+                usuario: {
+                    bsonType: "objectId",
+                    description: "Id del usuario al que pertenece"
                 }
             }
         }
@@ -221,6 +225,10 @@ db.createCollection("solicitudes", {
                 categoria: {
                     bsonType: "objectId",
                     description: "Id de la categoria"
+                },
+                usuario: {
+                    bsonType: "objectId",
+                    description: "Id del usuario al que pertenece"
                 }
             }
         }
