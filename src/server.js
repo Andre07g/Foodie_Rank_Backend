@@ -13,6 +13,8 @@ import usuariosRouter from "./routers/usuarios_router.js";
 import cors from 'cors'
 import rateLimit from "express-rate-limit";
 import { swaggerUi, swaggerSpec } from "./swagger.js";
+import { verificarVersion } from "./utils/validadorDeFuncion.js";
+
 
 
 //Config
@@ -29,6 +31,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(limiter);
+if (!verificarVersion()) {
+  console.error("🚨 Versión no compatible. Deteniendo servidor...");
+  process.exit(1);
+}
 // Uso de rutas
 
 app.use("/categorias",categoriasRouter);
