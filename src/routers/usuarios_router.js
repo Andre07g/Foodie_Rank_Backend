@@ -312,6 +312,6 @@ router.post("/logout", (req, res) => {
   res.status(200).json({ exito: true, mensaje: "Sesión cerrada correctamente" });
 });
 
-app.get('/api/verificar-admin', verificarToken, verificarAdmin, (req, res) => {
-    res.json({ exito: true, mensaje: 'Eres admin' });
+router.get("/api/verificar-admin", verificarToken, verificarAdmin, (req, res) => {
+  res.status(200).json({ exito: true, mensaje: "Eres admin", usuario: req.usuario });
 });
