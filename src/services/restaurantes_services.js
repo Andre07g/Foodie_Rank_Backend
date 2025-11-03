@@ -42,8 +42,14 @@ export async function obtenerRestaurantes(){
 
 
 export async function obtenerRestaurantePorID(id){
-    const db = await getDB()
+    const db = await obtenerBD()
     const result = await db.collection(COLECCION_RESTAURANTES).findOne({_id:new ObjectId(id)});
+    return result;
+}
+
+export async function obtenerRestaurantePorUser(id){
+    const db = await obtenerBD()
+    const result = await db.collection(COLECCION_RESTAURANTES).find({usuario:new ObjectId(id)}).toArray();
     return result;
 }
 

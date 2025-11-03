@@ -1,4 +1,4 @@
-import { obtenerRestaurantes, obtenerRestaurantePorID, crearRestaurante, actualizarRestaurante, eliminarRestaurante } from "../services/restaurantes_services.js";
+import { obtenerRestaurantes, obtenerRestaurantePorID, crearRestaurante, actualizarRestaurante, eliminarRestaurante, obtenerRestaurantePorUser } from "../services/restaurantes_services.js";
 
 export async function obtenerTodosLosRestaurantes(req, res) {
     try {
@@ -17,6 +17,18 @@ export async function obtenerUnRestaurantePorID(req, res) {
         if(!game) return res.status(404).json({error: "Restaurante no encontrado"});
         res.status(200).json(game)
     } catch (error) {
+        res.status(500).json({error: "Error al obtener el restaurante"});
+    }
+}
+
+export async function obtenerUnRestaurantePorUsuario(req, res) {
+    try {
+        const id = req.params.id;
+        const game = await obtenerRestaurantePorUser(id);
+        if(!game) return res.status(404).json({error: "Restaurante no encontrado"});
+        res.status(200).json(game)
+    } catch (error) {
+        console.log(error)
         res.status(500).json({error: "Error al obtener el restaurante"});
     }
 }

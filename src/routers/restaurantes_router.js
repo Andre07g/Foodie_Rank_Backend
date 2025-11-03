@@ -7,6 +7,7 @@ import {
   actualizarUnRestaurante,
   crearUnRestaurante,
   eliminarUnRestaurante,
+  obtenerUnRestaurantePorUsuario
 } from "../controllers/restaurantes_controller.js";
 
 const router = Router();
@@ -64,7 +65,7 @@ router.get("/", obtenerTodosLosRestaurantes);
  *         description: Error del servidor
  */
 router.get("/:id", obtenerUnRestaurantePorID);
-
+router.get("/usuario/:id",obtenerUnRestaurantePorUsuario);
 /**
  * @swagger
  * /restaurantes:
