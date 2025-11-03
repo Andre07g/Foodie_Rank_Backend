@@ -86,7 +86,7 @@ router.get("/buscar/:id", obtenerUnUsuarioPorID);
  *       400:
  *         description: Error en la validación o datos incorrectos
  */
-router.post("/", createUsuarioDTO, validationDTO, crearUnUsuario);
+router.post("/register", createUsuarioDTO, validationDTO, crearUnUsuario);
 
 /**
  * @swagger

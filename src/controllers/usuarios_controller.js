@@ -26,7 +26,11 @@ export async function crearUnUsuario(req, res) {
         const result = await crearUsuario(req.body);
         res.status(201).json(result)
     } catch (error) {
-        res.status(400).json({error: error.message})
+        // Capturar duplicados de correo
+        if (error.message.includes("E11000")) {
+            return res.status(400).json({ exito: false, error: "El correo ya está registrado" });
+        }
+        res.status(400).json({ exito: false, error: error.message });
     }
 }
 

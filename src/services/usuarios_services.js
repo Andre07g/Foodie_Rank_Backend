@@ -25,12 +25,18 @@ export async function obtenerUsuarioPorID(id){
 export async function crearUsuario(data){
     const {nombre, correo, contraseña} = data;
     const contraseñaHasheada = await hashPassword(contraseña);
-    console.log(contraseñaHasheada);
-    console.log(contraseñaHasheada.length)
     const usuario = {nombre, correo, contraseña:contraseñaHasheada, rol:"User", estado:"Activo"}
     const db = await obtenerBD();
-    await db.collection(COLECCION_USUARIOS).insertOne(usuario);
-    return {message:"El usuario fue creado correctamente"};
+
+    // Intentar insertar
+    const result = await db.collection(COLECCION_USUARIOS).insertOne(usuario);
+
+    // Retornar el usuario creado
+    return {
+        exito: true,
+        usuario: { _id: result.insertedId, nombre, correo, rol: "User", estado: "Activo" },
+        message: "El usuario fue creado correctamente"
+    };
 }
 
 export async function actualizarUsuario(id,data) {
