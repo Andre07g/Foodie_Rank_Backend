@@ -7,6 +7,7 @@ import {
   crearUnaReseña,
   actualizarUnaReseña,
   eliminarUnaReseña,
+  obtenerUnaReseñaPorIDCliente
 } from "../controllers/reseñas_controller.js";
 
 const router = Router();
@@ -203,3 +204,5 @@ export default router;
  *           type: string
  *           example: "Buena comida, pero el servicio fue lento."
  */
+
+router.get("/user/:id",obtenerUnaReseñaPorIDCliente)

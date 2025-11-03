@@ -83,3 +83,63 @@ export async function eliminarReseña(id){
     return {message:"Reseña eliminada correctamente"}
 
 }
+
+export async function obtenerReseñasPorUsuario(idUsuario) {
+  const db = await obtenerBD();
+
+  const reseñas = await db
+    .collection(COLECCION_RESEÑAS)
+    .aggregate([
+      {
+        $match: {
+          usuario: new ObjectId(idUsuario) // Filtra por el usuario específico
+        }
+      },
+      {
+        $lookup: {
+          from: COLECCION_USUARIOS,
+          localField: "usuario",
+          foreignField: "_id",
+          as: "usuario_info"
+        }
+      },
+      {
+        $unwind: {
+          path: "$usuario_info",
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: COLECCION_RESTAURANTES,
+          localField: "restaurante",
+          foreignField: "_id",
+          as: "restaurante_info"
+        }
+      },
+      {
+        $unwind: {
+          path: "$restaurante_info",
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          restaurante: 1,
+          calificacion: 1,
+          comentario: 1,
+          likes: 1,
+          dislikes: 1,
+          "usuario_info._id": 1,
+          "usuario_info.nombre": 1,
+          "usuario_info.correo": 1,
+          "restaurante_info._id": 1,
+          "restaurante_info.nombre": 1
+        }
+      }
+    ])
+    .toArray();
+
+  return reseñas;
+}

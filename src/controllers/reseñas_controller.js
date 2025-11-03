@@ -1,4 +1,4 @@
-import { obtenerReseñas, obtenerReseñaPorID, crearReseña, actualizarReseña, eliminarReseña } from "../services/reseñas_service.js";
+import { obtenerReseñas, obtenerReseñaPorID, crearReseña, actualizarReseña, eliminarReseña, obtenerReseñasPorUsuario } from "../services/reseñas_service.js";
 
 export async function obtenerTodasLasReseñas(req, res) {
     try {
@@ -17,6 +17,17 @@ export async function obtenerUnaReseñaPorID(req, res) {
         res.status(200).json(game)
     } catch (error) {
         res.status(500).json({error: "Error al obtener la reseña"});
+    }
+}
+
+export async function obtenerUnaReseñaPorIDCliente(req, res) {
+    try {
+        const id = req.params.id;
+        const game = await obtenerReseñasPorUsuario(id);
+        if(!game) return res.status(404).json({error: "Reseñas no encontradas"});
+        res.status(200).json(game)
+    } catch (error) {
+        res.status(500).json({error: "Error al obtener las reseñas"});
     }
 }
 
