@@ -1,4 +1,4 @@
-import { obtenerSolicitudes, obtenerSolicitudPorID, crearSolicitud, actualizarSolicitud, eliminarSolicitud } from "../services/solicitudes_services.js";
+import { obtenerSolicitudes, obtenerSolicitudPorID, crearSolicitud, actualizarSolicitud, eliminarSolicitud, aceptarSolicitud } from "../services/solicitudes_services.js";
 
 export async function obtenerTodasLasSolicitudes(req, res) {
     try {
@@ -45,6 +45,18 @@ export async function eliminarUnaSolicitud(req, res) {
         const result = await eliminarSolicitud(id);
         res.status(200).json(result);
     } catch (error) {
+        console.log(error)
         res.status(404).json({error: error.message});
+    }
+}
+
+export async function aceptarSolicitudController(req, res) {
+    const { id } = req.params;
+
+    try {
+        const resultado = await aceptarSolicitud(id);
+        res.status(200).json({ success: true, message: resultado.message });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
     }
 }

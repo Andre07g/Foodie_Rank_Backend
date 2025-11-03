@@ -13,7 +13,7 @@ import {
   obtenerUnaSolicitudPorID, 
   crearUnaSolicitud, 
   actualizarUnaSolicitud, 
-  eliminarUnaSolicitud 
+  eliminarUnaSolicitud , aceptarSolicitudController
 } from "../controllers/solicitudes_controller.js";
 
 const router = Router();
@@ -132,6 +132,9 @@ router.patch("/:id", updateSolicitudDTO, validationDTO, actualizarUnaSolicitud);
  *         description: Solicitud no encontrada
  */
 router.delete("/:id", eliminarUnaSolicitud);
+
+
+router.patch("/:id/aceptar", aceptarSolicitudController);
 
 export default router;
 
