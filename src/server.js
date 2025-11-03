@@ -14,6 +14,7 @@ import cors from 'cors'
 import rateLimit from "express-rate-limit";
 import { swaggerUi, swaggerSpec } from "./swagger.js";
 import { verificarVersion } from "./utils/validadorDeFuncion.js";
+import cookieParser from "cookie-parser";
 
 
 
@@ -28,9 +29,14 @@ const limiter = rateLimit({
   });
 
 const app = express();
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+  origin: ["http://127.0.0.1:5500", "http://localhost:5500"], // ambos posibles
+  credentials: true
+}));
+
 app.use(express.json());
-app.use(limiter);
+
 if (!verificarVersion()) {
   console.error("🚨 Versión no compatible. Deteniendo servidor...");
   process.exit(1);
