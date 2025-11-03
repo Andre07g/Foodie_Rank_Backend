@@ -7,6 +7,7 @@ import {
   crearUnPlato,
   actualizarUnPlato,
   eliminarUnPlato,
+  obtenerUnPlatoPorRestaurante
 } from "../controllers/platos_controller.js";
 
 const router = Router();
@@ -252,5 +253,8 @@ router.patch("/:id", updatePlatoDTO, validationDTO, actualizarUnPlato);
  *               $ref: '#/components/schemas/Error'
  */
 router.delete("/:id", eliminarUnPlato);
+
+router.get("/restaurante/:id",obtenerUnPlatoPorRestaurante)
+
 
 export default router;

@@ -16,6 +16,12 @@ export async function obtenerPlatoPorID(id){
     return result;
 }
 
+export async function obtenerPlatoPorRes(id){
+    const db = await obtenerBD()
+    const result = await db.collection(COLECCION_PLATOS).find({restaurante:new ObjectId(id)}).toArray();
+    return result;
+}
+
 export async function crearPlato(data){
     const {nombre, precio, descripcion, imagen, restaurante} = data;
     const restauranteID = new ObjectId(restaurante);

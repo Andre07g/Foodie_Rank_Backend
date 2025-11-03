@@ -1,4 +1,4 @@
-import { obtenerPlatos, obtenerPlatoPorID, crearPlato, actualizarPlato, eliminarPlato} from "../services/platos_services.js";
+import { obtenerPlatos, obtenerPlatoPorID, crearPlato, actualizarPlato, eliminarPlato, obtenerPlatoPorRes} from "../services/platos_services.js";
 
 export async function obtenerTodosLosPlatos(req, res) {
     try {
@@ -16,6 +16,18 @@ export async function obtenerUnPlato(req, res) {
         if(!game) return res.status(404).json({error: "Plato no encontrado"});
         res.status(200).json(game)
     } catch (error) {
+        res.status(500).json({error: "Error al obtener el plato"});
+    }
+}
+
+export async function obtenerUnPlatoPorRestaurante(req, res) {
+    try {
+        const id = req.params.id;
+        const game = await obtenerPlatoPorRes(id);
+        if(!game) return res.status(404).json({error: "Plato no encontrado"});
+        res.status(200).json(game)
+    } catch (error) {
+        console.log(error)
         res.status(500).json({error: "Error al obtener el plato"});
     }
 }
