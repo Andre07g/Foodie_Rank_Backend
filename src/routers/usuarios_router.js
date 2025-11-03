@@ -279,10 +279,6 @@ router.get("/logged/verificar", verificarToken, (req, res) => {
   });
 });
 
-router.post("/logout", (req, res) => {
-  res.clearCookie("token");
-  res.json({ mensaje: "Sesión cerrada correctamente" });
-});
 
 router.get("/logged/id", verificarToken, (req, res) => {
   if (!req.usuario) {
@@ -301,8 +297,8 @@ router.get("/logged/id", verificarToken, (req, res) => {
 router.post("/logout", (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     path: "/",
   });
 
