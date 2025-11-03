@@ -35,6 +35,10 @@ export async function crearUsuario(data){
 
 export async function actualizarUsuario(id,data) {
     const db = await obtenerBD()
+    if (data.contraseña){
+        data.contraseña = await hashPassword(data.contraseña);
+    };
+    console.log(data.contraseña)
     const result = await db.collection(COLECCION_USUARIOS).updateOne({_id:new ObjectId(id)},{$set:data});
     if(result.matchedCount===0){throw new Error("Usuario no encontrado");}
     return {message: "Usuario modificado correctamente"};

@@ -272,3 +272,46 @@ export default router;
  *           example: 12345678
  */
 
+router.get("/logged/verificar", verificarToken, (req, res) => {
+  res.json({
+    valido: true,
+    usuario: req.usuario
+  });
+});
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ mensaje: "Sesión cerrada correctamente" });
+});
+
+router.get("/logged/id", verificarToken, (req, res) => {
+  if (!req.usuario) {
+    return res.status(401).json({ exito: false, mensaje: "No autenticado" });
+  }
+
+  res.json({
+    exito: true,
+    usuarioId: req.usuario.id, 
+    nombre: req.usuario.nombre,
+    rol: req.usuario.rol
+  });
+  console.log("asddassd")
+});
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+  });
+
+  res.clearCookie("usuario", {
+    httpOnly: false,
+    secure: false,
+    sameSite: "lax",
+    path: "/",
+  });
+
+  res.status(200).json({ exito: true, mensaje: "Sesión cerrada correctamente" });
+});
