@@ -31,7 +31,7 @@ export const updateUsuarioDTO = [
     body("contraseña")
         .optional()
         .isString()
-        .isLength({ min: 60 }),
+        .isLength({ min: 8 }),
 
     body("rol")
         .optional()
