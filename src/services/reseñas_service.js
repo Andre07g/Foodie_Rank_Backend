@@ -2,7 +2,7 @@ import { obtenerBD } from "../config/db.js";
 import { ObjectId, Double } from "mongodb";
 const COLECCION_RESEÑAS = "reseñas"
 const COLECCION_USUARIOS = "usuarios"
-
+const COLECCION_RESTAURANTES = "restaurantes"
 
 export async function obtenerReseñas(){
     const db = await obtenerBD()
@@ -24,6 +24,14 @@ export async function obtenerReseñas(){
         }
       },
       {
+        $lookup: {
+          from: COLECCION_RESTAURANTES,     // Colección de usuarios
+          localField: "restaurante",        // Campo en reseñas
+          foreignField: "_id",          // Campo en usuarios
+          as: "restaurante_info"            // Resultado embebido
+        }
+      },
+      {
         $project: {
           _id: 1,
           restaurante: 1,
@@ -33,7 +41,9 @@ export async function obtenerReseñas(){
           dislikes: 1,
           "usuario_info._id": 1,
           "usuario_info.nombre": 1,
-          "usuario_info.correo": 1
+          "usuario_info.correo": 1,
+          "restaurante_info._id:":1,
+          "restaurante_info.nombre":1
         }
       }
     ])
@@ -43,8 +53,8 @@ export async function obtenerReseñas(){
 }
 
 export async function obtenerReseñaPorID(id){
-    const db = await getDB()
-    const result = await db.collection(COLECCION_RESEÑAS).findOne({_id:new ObjectId(id)});
+    const db = await obtenerBD()
+    const result = await db.collection(COLECCION_RESEÑAS).find({usuario:new ObjectId(id)}).toArray();
     return result;
 }
 
