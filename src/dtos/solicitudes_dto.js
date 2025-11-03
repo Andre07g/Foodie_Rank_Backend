@@ -16,11 +16,12 @@ export const createSolicitudDTO = [
         .trim()
         .notEmpty(),
 
-    body("popularidad")
-        .isFloat({ min: 1, max: 5 }),
     body("usuario")
         .isMongoId()
-        .withMessage("Debe ser un ID de usuario válido")
+        .withMessage("Debe ser un ID de usuario válido"),
+    body("descripcion").isString()
+        .trim()
+        .isLength({ min: 5 }),
 ];
 
 export const updateSolicitudDTO = createSolicitudDTO.map(val =>
