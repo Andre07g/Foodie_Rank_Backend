@@ -7,7 +7,7 @@ import {
   actualizarUnRestaurante,
   crearUnRestaurante,
   eliminarUnRestaurante,
-  obtenerUnRestaurantePorUsuario
+  obtenerUnRestaurantePorUsuario, añadirRestauranteFavorito, eliminarRestauranteFavorito
 } from "../controllers/restaurantes_controller.js";
 
 const router = Router();
@@ -216,3 +216,6 @@ export default router;
  *           type: string
  *           example: "671d8c91b8f7a0b5d99e7d01"
  */
+
+router.put("/aniadirResFavorito/",añadirRestauranteFavorito)
+router.put("/eliminarResFavorito/",eliminarRestauranteFavorito)

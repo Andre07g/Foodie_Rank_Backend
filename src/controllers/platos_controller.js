@@ -1,4 +1,4 @@
-import { obtenerPlatos, obtenerPlatoPorID, crearPlato, actualizarPlato, eliminarPlato, obtenerPlatoPorRes} from "../services/platos_services.js";
+import { obtenerPlatos, obtenerPlatoPorID, crearPlato, actualizarPlato, eliminarPlato, obtenerPlatoPorRes, añadirPlatoFav, eliminarPlatoFav} from "../services/platos_services.js";
 
 export async function obtenerTodosLosPlatos(req, res) {
     try {
@@ -58,5 +58,29 @@ export async function eliminarUnPlato(req, res) {
         res.status(200).json(result);
     } catch (error) {
         res.status(404).json({error: error.message});
+    }
+}
+
+export async function añadirPlatoFavorito(req, res) {
+    try {
+        const idPlato = req.body.idPlato;
+        const idUsuario = req.body.idUsuario;
+        const resultado = await añadirPlatoFav(idPlato, idUsuario)
+        res.status(200).json({"mensaje":"Se añadio el plato correctamente a favoritos"})
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+}
+
+export async function eliminarPlatoFavorito(req, res) {
+    try {
+        const idPlato = req.body.idPlato;
+        const idUsuario = req.body.idUsuario;
+        const resultado = await eliminarPlatoFav(idPlato, idUsuario)
+        console.log(resultado)
+        res.status(200).json({"mensaje":"Se eliminó el plato correctamente a favoritos"})
+    } catch (error) {
+        res.status(500).json(error.message)
+        console.log(error)
     }
 }

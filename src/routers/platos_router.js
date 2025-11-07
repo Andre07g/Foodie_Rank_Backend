@@ -7,7 +7,7 @@ import {
   crearUnPlato,
   actualizarUnPlato,
   eliminarUnPlato,
-  obtenerUnPlatoPorRestaurante
+  obtenerUnPlatoPorRestaurante, añadirPlatoFavorito, eliminarPlatoFavorito
 } from "../controllers/platos_controller.js";
 
 const router = Router();
@@ -256,5 +256,9 @@ router.delete("/:id", eliminarUnPlato);
 
 router.get("/restaurante/:id",obtenerUnPlatoPorRestaurante)
 
+router.put("/aniadirPlatoFavorito/",añadirPlatoFavorito)
+
+router.put("/eliminarPlatoFavorito/",eliminarPlatoFavorito)
 
 export default router;
+

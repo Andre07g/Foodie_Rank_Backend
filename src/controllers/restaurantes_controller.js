@@ -1,4 +1,4 @@
-import { obtenerRestaurantes, obtenerRestaurantePorID, crearRestaurante, actualizarRestaurante, eliminarRestaurante, obtenerRestaurantePorUser } from "../services/restaurantes_services.js";
+import { obtenerRestaurantes, obtenerRestaurantePorID, crearRestaurante, actualizarRestaurante, eliminarRestaurante, obtenerRestaurantePorUser, añadirResFav, eliminarResFav } from "../services/restaurantes_services.js";
 
 export async function obtenerTodosLosRestaurantes(req, res) {
     try {
@@ -59,5 +59,29 @@ export async function eliminarUnRestaurante(req, res) {
         res.status(200).json(result);
     } catch (error) {
         res.status(404).json({error: error.message});
+    }
+}
+
+export async function añadirRestauranteFavorito(req, res) {
+    try {
+        const idRes = req.body.idRes;
+        const idUsuario = req.body.idUsuario;
+        const resultado = await añadirResFav(idRes, idUsuario)
+        res.status(200).json({"mensaje":"Se añadio el restaurante correctamente a favoritos"})
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+}
+
+export async function eliminarRestauranteFavorito(req, res) {
+    try {
+        const idRes = req.body.idRes;
+        const idUsuario = req.body.idUsuario;
+        const resultado = await eliminarResFav(idRes, idUsuario)
+        console.log(resultado)
+        res.status(200).json({"mensaje":"Se eliminó el restaurante correctamente de favoritos"})
+    } catch (error) {
+        res.status(500).json(error.message)
+        console.log(error)
     }
 }

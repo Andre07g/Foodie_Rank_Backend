@@ -2,6 +2,7 @@ import { obtenerBD } from "../config/db.js";
 import { ObjectId, Double } from "mongodb";
 const COLECCION_RESTAURANTES = "restaurantes"
 const COLECCION_CATEGORIAS = "categorias"
+const COLECCION_USUARIOS = "usuarios"
 
 
 export async function obtenerRestaurantes(){
@@ -93,3 +94,25 @@ export async function eliminarRestaurante(id){
     return {message:"Restaurante eliminado correctamente"}
 
 }
+
+
+export async function añadirResFav(idRes, idUsuario){
+    const db = await obtenerBD()
+    const res = await db.collection(COLECCION_RESTAURANTES).findOne({_id:new ObjectId(idRes)});
+    console.log(res)
+    if (!res){throw new Error("No se encontro el restaurante ingresado");}
+    const resAñadir = await db.collection(COLECCION_USUARIOS).updateOne({_id:new ObjectId(idUsuario)},{$push:{restaurantesFavoritos:new ObjectId(idRes)}});
+    console.log(resAñadir)
+    return resAñadir;
+}
+
+export async function eliminarResFav(idRes, idUsuario){
+    const db = await obtenerBD()
+    const res = await db.collection(COLECCION_RESTAURANTES).findOne({_id:new ObjectId(idRes)});
+    console.log(res)
+    if (!res){throw new Error("No se encontro el restaurante ingresado");}
+    const resEliminar = await db.collection(COLECCION_USUARIOS).updateOne({_id:new ObjectId(idUsuario)},{$pull:{restaurantesFavoritos:(new ObjectId(idRes))}});
+    console.log(resEliminar)
+    return resEliminar;
+}
+

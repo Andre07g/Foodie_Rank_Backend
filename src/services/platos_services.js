@@ -1,7 +1,7 @@
 import { obtenerBD } from "../config/db.js";
 import { ObjectId, Double } from "mongodb";
 const COLECCION_PLATOS = "platos"
-
+const COLECCION_USUARIOS = "usuarios"
 
 
 export async function obtenerPlatos(){
@@ -46,3 +46,24 @@ export async function eliminarPlato(id){
     return {message:"Plato eliminado correctamente"}
 
 }
+
+export async function añadirPlatoFav(idPlato, idUsuario){
+    const db = await obtenerBD()
+    const plato = await db.collection(COLECCION_PLATOS).findOne({_id:new ObjectId(idPlato)});
+    console.log(plato)
+    if (!plato){throw new Error("No se encontro el plato ingresado");}
+    const usuarioAñadir = await db.collection(COLECCION_USUARIOS).updateOne({_id:new ObjectId(idUsuario)},{$push:{platosFavoritos:new ObjectId(idPlato)}});
+    console.log(usuarioAñadir)
+    return usuarioAñadir;
+}
+
+export async function eliminarPlatoFav(idPlato, idUsuario){
+    const db = await obtenerBD()
+    const plato = await db.collection(COLECCION_PLATOS).findOne({_id:new ObjectId(idPlato)});
+    console.log(plato)
+    if (!plato){throw new Error("No se encontro el plato ingresado");}
+    const usuarioEliminar = await db.collection(COLECCION_USUARIOS).updateOne({_id:new ObjectId(idUsuario)},{$pull:{platosFavoritos:(new ObjectId(idPlato))}});
+    console.log(usuarioEliminar)
+    return usuarioEliminar;
+}
+

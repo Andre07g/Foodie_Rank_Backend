@@ -78,5 +78,3 @@ export async function loginPass(data){
     const resultado = await bcrypt.compare(contraseniaUser,result.contraseña);
     return resultado;
 }
-
-
