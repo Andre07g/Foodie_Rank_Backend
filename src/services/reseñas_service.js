@@ -69,6 +69,7 @@ export async function crearReseña(data){
     return {message:"La Reseña fue creada correctamente"};
 }
 
+
 export async function actualizarReseña(id,data) {
     const db = await obtenerBD()
     const result = await db.collection(COLECCION_RESEÑAS).updateOne({_id:new ObjectId(id)},{$set:data});
